@@ -1,0 +1,10 @@
+﻿bin/
+obj/
+.idea/
+.vs/
+*.user
+*.suo
+*.log
+.DS_Store
+Thumbs.db
+appsettings.Development.json
