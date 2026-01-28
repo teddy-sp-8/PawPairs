@@ -1,0 +1,63 @@
+﻿@page
+@model PawPairs.Web.Pages.Matches.IndexModel
+@using PawPairs.Domain.Enums
+@{
+    ViewData["Title"] = "Match Requests";
+}
+
+<div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+    <div>
+        <h2 class="mb-1">💞 Match Requests</h2>
+        <div class="small-muted">All requests (pending/accepted/rejected)</div>
+    </div>
+    <div class="d-flex gap-2">
+        <a class="btn btn-outline-secondary" asp-page="Pending">Pending Inbox</a>
+        <a class="btn btn-primary" asp-page="/MatchRequests/Create">➕ New Request</a>
+    </div>
+</div>
+
+@if (Model.Requests.Count == 0)
+{
+    <div class="alert alert-info">No match requests yet.</div>
+}
+else
+{
+    <div class="kawaii-card">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead class="table-light">
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Status</th>
+                    <th class="text-end">Created</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model.Requests.OrderByDescending(x => x.CreatedAtUtc))
+                {
+                    <tr>
+                        <td class="fw-semibold">@r.FromLabel</td>
+                        <td class="fw-semibold">@r.ToLabel</td>
+                        <td>
+                            @if (r.Status == MatchStatus.Pending)
+                            {
+                                <span class="badge bg-warning text-dark">Pending</span>
+                            }
+                            else if (r.Status == MatchStatus.Accepted)
+                            {
+                                <span class="badge bg-success">Accepted</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Rejected</span>
+                            }
+                        </td>
+                        <td class="text-end text-muted">@r.CreatedAtUtc.ToLocalTime()</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

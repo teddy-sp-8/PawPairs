@@ -1,0 +1,66 @@
+﻿@page "{id:guid}"
+@model PawPairs.Web.Pages.Pets.EditModel
+@using PawPairs.Domain.Enums
+@{
+    ViewData["Title"] = "Edit Pet";
+}
+
+<div class="page-hero mb-4">
+    <h2 class="mb-1">✏️ Edit Pet</h2>
+    <div class="small-muted">Update pet details (energy, location, vaccination...).</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Pet name</label>
+                <input class="form-control" asp-for="Name" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Breed</label>
+                <input class="form-control" asp-for="BreedName" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Age</label>
+                <input class="form-control" asp-for="AgeYears" type="number" min="0" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Energy</label>
+                <select class="form-select" asp-for="EnergyLevel">
+                    @foreach (var e in Enum.GetValues<EnergyLevel>())
+                    {
+                        <option value="@e">@e</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" asp-for="IsVaccinated" />
+                    <label class="form-check-label fw-semibold">Vaccinated</label>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Latitude</label>
+                <input class="form-control" asp-for="Latitude" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Longitude</label>
+                <input class="form-control" asp-for="Longitude" />
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn btn-outline-secondary" asp-page="./Index">Back</a>
+            </div>
+        </form>
+    </div>
+</div>

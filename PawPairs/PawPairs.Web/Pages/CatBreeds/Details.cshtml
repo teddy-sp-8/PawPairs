@@ -1,0 +1,71 @@
+﻿@page "{breed}"
+@model PawPairs.Web.Pages.CatBreeds.DetailsModel
+@{
+    ViewData["Title"] = "Cat Breed Details";
+}
+
+@if (TempData["Error"] is not null)
+{
+    <div class="alert alert-danger">API error: @TempData["Error"]</div>
+}
+
+@if (Model.BreedInfo is null)
+{
+    <div class="alert alert-info">Breed not found.</div>
+}
+else
+{
+    <div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+        <div>
+            <h2 class="mb-1">🐱 @Model.BreedInfo.Breed</h2>
+            <div class="small-muted">
+                🌍 <b>@(string.IsNullOrWhiteSpace(Model.BreedInfo.Country) ? "Unknown" : Model.BreedInfo.Country)</b>
+                · 🧶 <b>@Model.BreedInfo.CoatCategory</b>
+            </div>
+        </div>
+        <a class="btn btn-outline-secondary" asp-page="./Index">← Back</a>
+    </div>
+
+    <div class="kawaii-card mb-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="pet-name">🌍 Country</div>
+                        <div class="pet-sub"><b>@(string.IsNullOrWhiteSpace(Model.BreedInfo.Country) ? "—" : Model.BreedInfo.Country)</b></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="pet-name">🧬 Origin</div>
+                        <div class="pet-sub"><b>@(string.IsNullOrWhiteSpace(Model.BreedInfo.Origin) ? "—" : Model.BreedInfo.Origin)</b></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="pet-name">🧶 Coat</div>
+                        <div class="pet-sub">
+                            <b>@(string.IsNullOrWhiteSpace(Model.BreedInfo.Coat) ? "—" : Model.BreedInfo.Coat)</b>
+                            <div class="text-muted small">Category: @Model.BreedInfo.CoatCategory</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card pet-card">
+        <div class="card-body">
+            <div class="pet-name mb-2">🎨 Pattern</div>
+            <div class="text-muted" style="white-space: pre-wrap;">
+                @(string.IsNullOrWhiteSpace(Model.BreedInfo.Pattern) ? "No pattern info." : Model.BreedInfo.Pattern)
+            </div>
+        </div>
+    </div>
+}

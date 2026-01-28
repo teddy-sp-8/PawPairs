@@ -1,0 +1,69 @@
+﻿@page
+@model PawPairs.Web.Pages.Playdates.CreateModel
+@{
+    ViewData["Title"] = "Create Playdate";
+}
+
+<div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+    <div>
+        <h2 class="mb-1">🎀 Create Playdate</h2>
+        <div class="small-muted">Pick two pets and schedule their meetup ✨</div>
+    </div>
+    <a class="btn btn-outline-secondary" asp-page="./Index">← Back</a>
+</div>
+
+<div class="kawaii-card">
+    <form method="post" class="row g-3">
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">🐶 Pet A</label>
+            <select class="form-select" asp-for="PetAId">
+                <option value="">Select pet...</option>
+                @foreach (var p in Model.Pets.OrderBy(x => x.Name))
+                {
+                    <option value="@p.Id">@p.Name (@p.Species) — @p.BreedName</option>
+                }
+            </select>
+            <div class="form-text">The one sending the invite vibe.</div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">🐱 Pet B</label>
+            <select class="form-select" asp-for="PetBId">
+                <option value="">Select pet...</option>
+                @foreach (var p in Model.Pets.OrderBy(x => x.Name))
+                {
+                    <option value="@p.Id">@p.Name (@p.Species) — @p.BreedName</option>
+                }
+            </select>
+            <div class="form-text">The one receiving the invite vibe.</div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">📅 Scheduled time</label>
+            <input class="form-control" asp-for="ScheduledAtUtc" type="datetime-local" />
+            <div class="form-text">
+                Stored as UTC. (Your browser shows local time, but we store UTC in DB.)
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">📍 Location</label>
+            <input class="form-control" asp-for="LocationName" placeholder="City Park, Skopje..." />
+            <div class="form-text">Example: “City Park”, “Dog café”, “Private yard”.</div>
+        </div>
+
+        <div class="col-12">
+            <label class="form-label fw-semibold">📝 Notes (optional)</label>
+            <textarea class="form-control" asp-for="Notes" rows="4"
+                      placeholder="Bring water, shy dog, prefers no big dogs, etc."></textarea>
+        </div>
+
+        <div class="col-12 d-flex gap-2">
+            <button class="btn btn-primary" type="submit">✨ Create Playdate</button>
+            <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
+        </div>
+    </form>
+</div>

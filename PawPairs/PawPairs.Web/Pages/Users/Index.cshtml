@@ -1,0 +1,82 @@
+﻿@page
+@model PawPairs.Web.Pages.Users.IndexModel
+@{
+    ViewData["Title"] = "Users";
+}
+
+<div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+    <div>
+        <h2 class="mb-1">👤 Users</h2>
+        <div class="small-muted">Pet owners registered in PawPairs</div>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a class="btn btn-primary" asp-page="Create">➕ Add User</a>
+    </div>
+</div>
+
+<div class="kawaii-card mb-4">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-8">
+            <label class="form-label fw-semibold">Search</label>
+            <input class="form-control" name="q" value="@Request.Query["q"]"
+                   placeholder="Search by name, email, city..." />
+            <div class="form-text">Tip: type “tedi”, “Praha”, or an email.</div>
+        </div>
+        <div class="col-md-4 d-flex gap-2">
+            <button class="btn btn-primary w-100">Search</button>
+            <a class="btn btn-outline-secondary w-100" asp-page="./Index">Reset</a>
+        </div>
+    </form>
+</div>
+
+@if (Model.Users.Count == 0)
+{
+    <div class="alert alert-info">
+        No users yet. Click <b>Add User</b> to create the first pet owner 🐾
+    </div>
+}
+else
+{
+    <div class="card p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0 align-middle">
+                <thead class="table-light">
+                <tr>
+                    <th style="width: 60px;"></th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>City</th>
+                    <th class="text-end" style="width: 240px;"></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var u in Model.Users)
+                {
+                    var initials =
+                        $"{(string.IsNullOrWhiteSpace(u.FirstName) ? "" : u.FirstName.Substring(0, 1))}" +
+                        $"{(string.IsNullOrWhiteSpace(u.LastName) ? "" : u.LastName.Substring(0, 1))}"
+                        .ToUpper();
+
+                    <tr>
+                        <td>
+                            <div class="badge badge-soft" style="min-width:44px; text-align:center;">
+                                @initials
+                            </div>
+                        </td>
+                        <td class="fw-semibold">@u.FirstName @u.LastName</td>
+                        <td class="text-muted">@u.Email</td>
+                        <td>@u.City</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-secondary"
+                               asp-page="Edit" asp-route-id="@u.Id">Edit</a>
+                            <a class="btn btn-sm btn-outline-danger"
+                               asp-page="Delete" asp-route-id="@u.Id">Delete</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

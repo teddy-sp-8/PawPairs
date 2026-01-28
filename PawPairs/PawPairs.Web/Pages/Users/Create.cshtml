@@ -1,0 +1,43 @@
+﻿@page
+@model PawPairs.Web.Pages.Users.CreateModel
+@{
+    ViewData["Title"] = "Create User";
+}
+
+<div class="page-hero mb-4">
+    <h2 class="mb-1">➕ Create User</h2>
+    <div class="small-muted">Add a new pet owner to the system.</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">First name</label>
+                <input class="form-control" asp-for="FirstName" placeholder="Teodora" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Last name</label>
+                <input class="form-control" asp-for="LastName" placeholder="Pavlovska" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input class="form-control" asp-for="Email" type="email" placeholder="tedi@gmail.com" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">City</label>
+                <input class="form-control" asp-for="City" placeholder="Praha" />
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

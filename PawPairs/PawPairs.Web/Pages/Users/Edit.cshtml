@@ -1,0 +1,43 @@
+﻿@page "{id:guid}"
+@model PawPairs.Web.Pages.Users.EditModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<div class="page-hero mb-4">
+    <h2 class="mb-1">✏️ Edit User</h2>
+    <div class="small-muted">Update user details (owner info).</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">First name</label>
+                <input class="form-control" asp-for="FirstName" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Last name</label>
+                <input class="form-control" asp-for="LastName" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Email</label>
+                <input class="form-control" asp-for="Email" type="email" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">City</label>
+                <input class="form-control" asp-for="City" />
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+                <button class="btn btn-primary" type="submit">Save</button>
+                <a class="btn btn-outline-secondary" asp-page="./Index">Back</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,156 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+:root{
+  --bg: #fbf3e7;
+  --card: #ffffff;
+  --ink: #2b2b2b;
+  --muted: #6c6c6c;
+  --accent: #b97a3c;      /* warm brown */
+  --accent2: #f2c48d;     /* soft peach */
+  --accent3: #ffe9c7;     /* creamy */
+  --stroke: #f0dfc8;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.navbar {
+  background: rgba(255,255,255,.85) !important;
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--stroke) !important;
+}
+
+.brand{
+  font-weight: 800;
+  letter-spacing: .2px;
+  color: var(--ink) !important;
+}
+
+.nav-link{
+  border-radius: 999px;
+  padding: .45rem .9rem !important;
+  margin-right: .25rem;
+}
+
+.nav-link:hover{
+  background: var(--accent3);
+}
+
+.card{
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.05);
+}
+
+.btn-primary{
+  background: var(--accent);
+  border-color: var(--accent);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.btn-primary:hover{
+  background: #a86c33;
+  border-color: #a86c33;
+}
+
+.btn-outline-secondary, .btn-outline-dark{
+  border-radius: 999px;
+}
+
+.badge{
+  border-radius: 999px;
+  padding: .45rem .7rem;
+}
+
+.badge-soft{
+  background: var(--accent3);
+  color: var(--accent);
+  border: 1px solid var(--stroke);
+}
+
+.page-hero{
+  background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.6));
+  border: 1px solid var(--stroke);
+  border-radius: 22px;
+  padding: 18px 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.05);
+}
+
+.kawaii-card{
+  background: var(--card);
+  border: 1px solid var(--stroke);
+  border-radius: 18px;
+  padding: 14px 16px;
+}
+
+.small-muted{
+  color: var(--muted);
+  font-size: .92rem;
+}
+.page-hero{
+  padding:18px 18px;
+  border-radius:18px;
+  background: #fff7ef;
+  border: 1px solid #f2e6db;
+}
+
+.small-muted{ color:#7b6f66; }
+
+.kawaii-card{
+  background:#ffffff;
+  border:1px solid #f2e6db;
+  border-radius:18px;
+  padding:16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+}
+
+.badge-soft{
+  background:#fff2da;
+  color:#7b4e16;
+  border:1px solid #f2ddb9;
+  border-radius:999px;
+  padding:8px 10px;
+  font-weight:600;
+}
+
+.pet-card{
+  border-radius:18px;
+  border:1px solid #f2e6db;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+}
+
+.pet-name{
+  font-size:1.1rem;
+  font-weight:800;
+}
+
+.pet-sub{
+  color:#7b6f66;
+}
+
+.pet-meta .muted{
+  color:#7b6f66;
+}

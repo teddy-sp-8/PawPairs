@@ -1,0 +1,90 @@
+﻿@page
+@model PawPairs.Web.Pages.Pets.CreateModel
+@using PawPairs.Domain.Enums
+@{
+    ViewData["Title"] = "Create Pet";
+}
+
+<div class="page-hero mb-4">
+    <h2 class="mb-1">➕ Create Pet</h2>
+    <div class="small-muted">Add a new pet profile for matching and playdates.</div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post" class="row g-3">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Owner</label>
+                <select class="form-select" asp-for="OwnerId">
+                    <option value="">Select owner...</option>
+                    @foreach (var u in Model.Users)
+                    {
+                        <option value="@u.Id">
+                            @u.FirstName @u.LastName · @u.Email
+                        </option>
+                    }
+                </select>
+                <div class="form-text">The owner must exist before creating a pet.</div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Pet name</label>
+                <input class="form-control" asp-for="Name" placeholder="Luna" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Species</label>
+                <select class="form-select" asp-for="Species">
+                    @foreach (var s in Enum.GetValues<Species>())
+                    {
+                        <option value="@s">@s</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Breed</label>
+                <input class="form-control" asp-for="BreedName" placeholder="Border Collie" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Age (years)</label>
+                <input class="form-control" asp-for="AgeYears" type="number" min="0" />
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label fw-semibold">Energy level</label>
+                <select class="form-select" asp-for="EnergyLevel">
+                    @foreach (var e in Enum.GetValues<EnergyLevel>())
+                    {
+                        <option value="@e">@e</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-4 d-flex align-items-center">
+                <div class="form-check mt-4">
+                    <input class="form-check-input" asp-for="IsVaccinated" />
+                    <label class="form-check-label fw-semibold">Vaccinated</label>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Latitude</label>
+                <input class="form-control" asp-for="Latitude" placeholder="41.9981" />
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label fw-semibold">Longitude</label>
+                <input class="form-control" asp-for="Longitude" placeholder="21.4254" />
+            </div>
+
+            <div class="col-12 d-flex gap-2 mt-2">
+                <button class="btn btn-primary" type="submit">Create</button>
+                <a class="btn btn-outline-secondary" asp-page="./Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

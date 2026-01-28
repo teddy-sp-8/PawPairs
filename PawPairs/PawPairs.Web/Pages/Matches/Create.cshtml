@@ -1,0 +1,46 @@
+﻿@page
+@model PawPairs.Web.Pages.Matches.CreateModel
+@{
+    ViewData["Title"] = "New Match Request";
+}
+
+<div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+    <div>
+        <h2 class="mb-1">💌 New Match Request</h2>
+        <div class="small-muted">Send a match request from one pet to another</div>
+    </div>
+    <span class="badge badge-soft">Matchmaker</span>
+</div>
+
+<div class="kawaii-card">
+    <form method="post" class="row g-3">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">From Pet</label>
+            <select class="form-select" asp-for="FromPetId">
+                <option value="">-- choose sender --</option>
+                @foreach (var p in Model.PetOptions)
+                {
+                    <option value="@p.Id">@p.Label</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">To Pet</label>
+            <select class="form-select" asp-for="ToPetId">
+                <option value="">-- choose receiver --</option>
+                @foreach (var p in Model.PetOptions)
+                {
+                    <option value="@p.Id">@p.Label</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-12 d-flex gap-2 mt-2">
+            <button class="btn btn-primary" type="submit">Send Request ✨</button>
+            <a class="btn btn-outline-secondary" asp-page="/Matches/Index">Cancel</a>
+        </div>
+    </form>
+</div>

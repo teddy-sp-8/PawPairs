@@ -1,0 +1,78 @@
+﻿@page "{id}"
+@model PawPairs.Web.Pages.DogBreeds.DetailsModel
+@{
+    ViewData["Title"] = "Breed Details";
+}
+
+
+@{
+    ViewData["Title"] = "Breed Details";
+}
+
+@if (TempData["Error"] is not null)
+{
+    <div class="alert alert-danger">API error: @TempData["Error"]</div>
+}
+
+@if (Model.Breed is null)
+{
+    <div class="alert alert-info">Breed not found.</div>
+}
+else
+{
+    <div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+        <div>
+            <h2 class="mb-1">🐶 @Model.Breed.Name</h2>
+            <div class="small-muted">
+                Size: <b>@Model.Breed.SizeCategory</b> · Hypo: <b>@(Model.Breed.Hypoallergenic ? "Yes ✅" : "No ❌")</b>
+            </div>
+        </div>
+        <a class="btn btn-outline-secondary" asp-page="./Index">← Back</a>
+    </div>
+
+    <div class="kawaii-card mb-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="pet-name">📅 Life</div>
+                        <div class="pet-sub">
+                            <b>@(Model.Breed.LifeMinYears?.ToString() ?? "?")–@(Model.Breed.LifeMaxYears?.ToString() ?? "?")</b> years
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="pet-name">⚖️ Male weight</div>
+                        <div class="pet-sub">
+                            <b>@(Model.Breed.MaleWeightMinKg?.ToString() ?? "?")–@(Model.Breed.MaleWeightMaxKg?.ToString() ?? "?")</b> kg
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="pet-name">⚖️ Female weight</div>
+                        <div class="pet-sub">
+                            <b>@(Model.Breed.FemaleWeightMinKg?.ToString() ?? "?")–@(Model.Breed.FemaleWeightMaxKg?.ToString() ?? "?")</b> kg
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card pet-card">
+        <div class="card-body">
+            <div class="pet-name mb-2">✨ Description</div>
+            <div class="text-muted" style="white-space: pre-wrap;">
+                @(Model.Breed.Description ?? "No description available.")
+            </div>
+        </div>
+    </div>
+}

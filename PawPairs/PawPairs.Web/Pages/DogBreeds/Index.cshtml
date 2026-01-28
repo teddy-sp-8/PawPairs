@@ -1,0 +1,145 @@
+﻿@page
+@model PawPairs.Web.Pages.DogBreeds.IndexModel
+@{
+    ViewData["Title"] = "Dog Breeds";
+}
+
+<div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+    <div>
+        <h2 class="mb-1">🐶 Dog Breeds</h2>
+        <div class="small-muted">Search, filter, and learn breed info (external API)</div>
+    </div>
+    <span class="badge badge-soft">DogAPI Proxy</span>
+</div>
+
+@if (TempData["Error"] is not null)
+{
+    <div class="alert alert-danger">
+        API error: @TempData["Error"]
+    </div>
+}
+
+<div class="kawaii-card mb-4">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-6">
+            <label class="form-label fw-semibold">Search</label>
+            <input class="form-control" name="Q" value="@Model.Q" placeholder="e.g. Collie, Akita, Terrier..." />
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Size</label>
+            <select class="form-select" name="Size">
+                <option value="">Any</option>
+                <option value="Small" selected="@(Model.Size == "Small")">Small</option>
+                <option value="Medium" selected="@(Model.Size == "Medium")">Medium</option>
+                <option value="Large" selected="@(Model.Size == "Large")">Large</option>
+                <option value="Unknown" selected="@(Model.Size == "Unknown")">Unknown</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Hypoallergenic</label>
+            <select class="form-select" name="Hypo">
+                <option value="" selected="@(Model.Hypo is null)">Any</option>
+                <option value="true" selected="@(Model.Hypo == true)">Yes</option>
+                <option value="false" selected="@(Model.Hypo == false)">No</option>
+            </select>
+        </div>
+
+        <div class="col-12 d-flex gap-2 mt-2">
+            <button class="btn btn-primary" type="submit">✨ Apply</button>
+            <a class="btn btn-outline-secondary" asp-page="./Index">Reset</a>
+        </div>
+    </form>
+</div>
+
+@if (Model.Breeds.Count == 0)
+{
+    <div class="alert alert-info">
+        No breeds found. Try a different search 🐾
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var b in Model.Breeds.Take(60))
+        {
+ 
+            var routeId = (b.Id ?? "");
+            var hasId = !string.IsNullOrWhiteSpace(routeId);
+
+            <div class="col-md-4">
+                <a asp-page="./Details"
+                   asp-route-id="@b.Id"
+                   class="text-decoration-none text-reset">
+
+
+
+                    <div class="card h-100 pet-card breed-click">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <div class="pet-name d-flex align-items-center gap-2">
+                                        @b.Name
+                                        <span class="text-muted small">→</span>
+                                    </div>
+                                    <div class="pet-sub">
+                                        Size: <b>@b.SizeCategory</b>
+                                        · Hypo: <b>@(b.Hypoallergenic ? "Yes ✅" : "No ❌")</b>
+                                    </div>
+                                </div>
+
+                                <span class="badge badge-soft">
+                                    🦴 @b.SizeCategory
+                                </span>
+                            </div>
+
+                            <div class="pet-meta mt-3">
+                                <div>
+                                    <span class="muted">Life:</span>
+                                    <b>@(b.LifeMinYears?.ToString() ?? "?")–@(b.LifeMaxYears?.ToString() ?? "?")</b> yrs
+                                </div>
+
+                                <div class="mt-1">
+                                    <span class="muted">Male kg:</span>
+                                    <b>@(b.MaleWeightMinKg?.ToString() ?? "?")–@(b.MaleWeightMaxKg?.ToString() ?? "?")</b>
+                                    · <span class="muted">Female kg:</span>
+                                    <b>@(b.FemaleWeightMinKg?.ToString() ?? "?")–@(b.FemaleWeightMaxKg?.ToString() ?? "?")</b>
+                                </div>
+
+                                @if (!string.IsNullOrWhiteSpace(b.Description))
+                                {
+                                    <div class="mt-3 small text-muted">
+                                        @((b.Description!.Length > 180) ? b.Description.Substring(0, 180) + "..." : b.Description)
+                                    </div>
+                                }
+
+                           
+                            </div>
+                        </div>
+                    </div>
+
+                </a>
+            </div>
+        }
+    </div>
+
+    @if (Model.Breeds.Count > 60)
+    {
+        <div class="text-center text-muted mt-4">
+            Showing first 60 results. Use search to narrow it down ✨
+        </div>
+    }
+}
+
+<style>
+    /* lightweight, host-friendly micro styling */
+    .breed-click {
+        cursor: pointer;
+        transition: transform .12s ease, box-shadow .12s ease;
+    }
+    .breed-click:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 35px rgba(0,0,0,.12);
+    }
+</style>

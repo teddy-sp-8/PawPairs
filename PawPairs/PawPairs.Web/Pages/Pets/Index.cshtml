@@ -1,0 +1,112 @@
+﻿@page
+@model PawPairs.Web.Pages.Pets.IndexModel
+@using PawPairs.Domain.Enums
+@{
+    ViewData["Title"] = "Pets";
+}
+
+<div class="page-hero mb-4 d-flex align-items-center justify-content-between">
+    <div>
+        <h2 class="mb-1">🐾 Pets</h2>
+        <div class="small-muted">Browse, filter, and manage pets</div>
+    </div>
+    <a class="btn btn-primary" asp-page="Create">➕ Add Pet</a>
+</div>
+
+<div class="kawaii-card mb-4">
+    <form method="get" class="row g-2 align-items-end">
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Species</label>
+            <select class="form-select" name="Species">
+                <option value="">Any</option>
+                @foreach (var s in Enum.GetValues<Species>())
+                {
+                    <option value="@s" selected="@(Model.Species == s)">@s</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label fw-semibold">Energy</label>
+            <select class="form-select" name="EnergyLevel">
+                <option value="">Any</option>
+                @foreach (var e in Enum.GetValues<EnergyLevel>())
+                {
+                    <option value="@e" selected="@(Model.EnergyLevel == e)">@e</option>
+                }
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label fw-semibold">Near Lat</label>
+            <input class="form-control" name="NearLat" value="@Model.NearLat" placeholder="41.9981" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label fw-semibold">Near Lng</label>
+            <input class="form-control" name="NearLng" value="@Model.NearLng" placeholder="21.4254" />
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label fw-semibold">Radius (km)</label>
+            <input class="form-control" name="RadiusKm" value="@Model.RadiusKm" placeholder="10" />
+        </div>
+
+        <div class="col-12 d-flex gap-2 mt-2">
+            <button class="btn btn-primary" type="submit">✨ Filter</button>
+            <a class="btn btn-outline-secondary" asp-page="./Index">Reset</a>
+        </div>
+    </form>
+</div>
+
+@if (Model.Pets.Count == 0)
+{
+    <div class="alert alert-info">
+        No pets found. Try different filters — or add a new pet 🐶🐱
+    </div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var p in Model.Pets)
+        {
+            var ownerDisplay = Model.OwnerNameById.TryGetValue(p.OwnerId, out var n)
+                ? n
+                : "Unknown owner";
+            
+
+            <div class="col-md-4">
+                <div class="card h-100 pet-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="pet-name">@p.Name</div>
+                                <div class="pet-sub">
+                                    @p.Species · @p.BreedName
+                                </div>
+                            </div>
+
+                            <span class="badge badge-soft">
+                                ⚡ @p.EnergyLevel
+                            </span>
+                        </div>
+
+                        <div class="pet-meta mt-3">
+                            <div><span class="muted">Age:</span> <b>@p.AgeYears</b></div>
+                            <div><span class="muted">Vaccinated:</span> <b>@(p.IsVaccinated ? "Yes ✅" : "No ❌")</b></div>
+                            <div class="mt-2 small">
+                                <span class="muted">Owner:</span>
+                                <span class="text-muted">@ownerDisplay</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer bg-transparent d-flex gap-2">
+                        <a class="btn btn-sm btn-outline-secondary" asp-page="Edit" asp-route-id="@p.Id">Edit</a>
+                        <a class="btn btn-sm btn-outline-dark" asp-page="Details" asp-route-id="@p.Id">Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

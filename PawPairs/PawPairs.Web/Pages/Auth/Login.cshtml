@@ -1,0 +1,28 @@
+﻿@page
+@model PawPairs.Web.Pages.Auth.LoginModel
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm mt-4">
+            <div class="card-body">
+                <h3 class="mb-1">Login</h3>
+                <div class="text-muted mb-3">Fake login (session) — enter an existing user email.</div>
+
+                <form method="post" class="d-grid gap-3">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+
+                    <div>
+                        <label class="form-label">Email</label>
+                        <input class="form-control" asp-for="Email" type="email" placeholder="name@example.com" />
+                    </div>
+
+                    <button class="btn btn-primary" type="submit">Sign in</button>
+
+                    <div class="small text-muted">
+                        Don’t have a user? Create one in <a asp-page="/Users/Create">Users → Create</a>.
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
